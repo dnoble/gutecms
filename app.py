@@ -24,12 +24,17 @@ class BaseRequestHandler(webapp.RequestHandler):
   roles = None
 
   def respond(self, filename, payload):
+    is_dev_env = ('Development' in os.getenv('SERVER_SOFTWARE'))
+    env = { 'development': is_dev_env,
+            'production': not is_dev_env,
+          }
     user = users.get_current_user()
     role = { 'admin': self.has_role(user, 'Admin'),
              'manager': self.has_role(user, 'Manager'),
              'editor': self.has_role(user, 'Editor'),
            }
     role['none'] = self.has_no_roles(user)
+    payload['env'] = env
     payload['user'] = user
     payload['role'] = role
     payload['logout_url'] = users.create_logout_url(self.request.uri)

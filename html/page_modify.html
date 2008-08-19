@@ -1,0 +1,18 @@
+{% extends 'authenticated.html' %}
+
+{% block title %}Modify Page{% endblock %}
+
+{% block content %}
+  <form action="/_cms/pages/delete" method="post">
+    <input type="hidden" name="key" value="{{ page.key }}"/>
+    <div><input type="submit" value="Delete"></div>
+  </form>
+  <form action="/_cms/pages/modify" method="post">
+    <input type="hidden" name="key" value="{{ page.key }}"/>
+    <input type="hidden" name="oldurl" value="{{ page.url }}"/>
+    <div>Path<br/><input name="url" value="{{ page.url }}"/></div>
+    <div>Title<br/><input name="title" value="{{ page.title }}"/></div>
+    <div>Content<br/><textarea name="content" rows="3" cols="60">{{ page.content }}</textarea></div>
+    <div><input type="submit" value="Save"></div>
+  </form>
+{% endblock %}

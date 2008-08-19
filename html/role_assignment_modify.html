@@ -1,0 +1,21 @@
+{% extends 'authenticated.html' %}
+
+{% block title %}Modify Role Assignment{% endblock %}
+
+{% block content %}
+  <form action="/_cms/roles/delete" method="post">
+    <input type="hidden" name="key" value="{{ role_assignment.key }}"/>
+    <div><input type="submit" value="Delete"></div>
+  </form>
+  <form action="/_cms/roles/modify" method="post">
+    <input type="hidden" name="key" value="{{ role_assignment.key }}"/>
+    <div>User<br/><input name="user" value="{{ role_assignment.user }}"/></div>
+    <div>Role<br/>
+      <select name="role">
+        <option value="Editor"{% ifequal role_assignment.role 'Editor' %}SELECTED{% endifequal %}>Editor</option>
+        <option value="Manager"{% ifequal role_assignment.role 'Manager' %}SELECTED{% endifequal %}>Manager</option>
+      </select>
+    </div>
+    <div><input type="submit" value="Save"></div>
+  </form>
+{% endblock %}

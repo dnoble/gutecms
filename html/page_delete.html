@@ -1,0 +1,14 @@
+{% extends 'authenticated.html' %}
+
+{% block title %}Delete Page{% endblock %}
+
+{% block content %}
+  <form action="/_cms/pages/delete" method="post">
+    <input type="hidden" name="key" value="{{ page.key }}"/>
+    <div><input type="submit" value="Delete"></div>
+  </form>
+    <div><b>Path</b><br/>{{ page.url }}</div>
+    <div><b>Title</b><br/>{{ page.title }}</div>
+    <div><b>Content</b><br/>{{ page.content }}</div>
+  </form>
+{% endblock %}

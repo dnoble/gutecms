@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div id="header">
+<span id="title"><a href="/_cms">GuteCMS Editor</a></span>
+{% if user %}
+<ul>
+{% if role.editor %}<li><a href="/_cms/pages/list">Pages</a></li>{% endif %}
+{% if role.manager %}<li><a href="/_cms/roles/list">Roles</a></li>{% endif %}
+{% if role.admin %}<li><a href="/_ah/admin">Admin</a></li>{% endif %}
+{% if logout_url %}<li><a href="{{logout_url}}">Logout</a></li>{% endif %}
+<li>{{user.nickname}}</li>
+</ul>
+{% endif %}
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="content">
+Content
+</div>
+{% endblock %}

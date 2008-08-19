@@ -1,0 +1,12 @@
+{% extends 'authenticated.html' %}
+
+{% block title %}Add Page{% endblock %}
+
+{% block content %}
+  <form action="/_cms/pages/add" method="post">
+    <div>Path<br/><input name="url"/></div>
+    <div>Title<br/><input name="title"/></div>
+    <div>Content<br/><textarea name="content" rows="3" cols="60"></textarea></div>
+    <div><input type="submit" value="Save"></div>
+  </form>
+{% endblock %}

@@ -1,0 +1,16 @@
+application: gutecms
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /style
+  static_dir: style
+
+- url: /favicon.ico
+  static_files: style/default/favicon.ico
+  upload: style/default/favicon.ico
+
+- url: /.*
+  script: app.py
+

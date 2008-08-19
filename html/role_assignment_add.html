@@ -1,0 +1,16 @@
+{% extends 'authenticated.html' %}
+
+{% block title %}Add Role Assignment{% endblock %}
+
+{% block content %}
+  <form action="/_cms/roles/add" method="post">
+    <div>User<br/><input name="user"/></div>
+    <div>Role<br/>
+      <select name="role">
+        <option value="Editor">Editor</option>
+        <option value="Manager">Manager</option>
+      </select>
+    </div>
+    <div><input type="submit" value="Save"></div>
+  </form>
+{% endblock %}

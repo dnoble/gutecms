@@ -1,0 +1,14 @@
+{% extends 'authenticated.html' %}
+
+{% block title %}Role Assignment List{% endblock %}
+
+{% block content %}
+  <h2>Role Assignments</h2>
+  <p>[ <a href="/_cms/roles/add">Add</a> ]</p>
+  {% for item in list %}
+    <p>
+      {{ item.user }} 
+      <a href="/_cms/roles/modify?key={{ item.key }}">{{ item.role }}</a>
+    </p>
+  {% endfor %}
+{% endblock %}

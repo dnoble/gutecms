@@ -16,7 +16,7 @@ class RoleAssignment(db.Model):
 class Page(db.Model):
   url = db.StringProperty(required=True)
   title = db.StringProperty()
-  content = db.StringProperty(multiline=True)
+  content = db.TextProperty()
   date = db.DateTimeProperty(auto_now_add=True)
   author = db.UserProperty()
 

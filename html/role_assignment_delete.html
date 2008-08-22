@@ -3,7 +3,7 @@
 {% block title %}Delete Role Assignment{% endblock %}
 
 {% block content %}
-  <form action="/_cms/roles/delete" method="post">
+  <form action="/edit/roles/delete" method="post">
     <input type="hidden" name="key" value="{{ role_assignment.key }}"/>
     <div><input type="submit" value="Delete"></div>
   </form>

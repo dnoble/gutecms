@@ -3,7 +3,7 @@
 {% block title %}Delete Page{% endblock %}
 
 {% block content %}
-  <form action="/_cms/pages/delete" method="post">
+  <form action="/edit/pages/delete" method="post">
     <input type="hidden" name="key" value="{{ page.key }}"/>
     <div><input type="submit" value="Delete"></div>
   </form>

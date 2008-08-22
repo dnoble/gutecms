@@ -125,7 +125,7 @@ class RoleAssignmentEditor(BaseRequestHandler):
     # TODO: verify that url is unique & has only valid characters
     role_assignment = RoleAssignment(user=user, role=role)
     key = role_assignment.put()
-    self.redirect('/_cms/roles/list')
+    self.redirect('/edit/roles/list')
 
   def show_modify_form(self):
     key = self.request.get('key')
@@ -153,7 +153,7 @@ class RoleAssignmentEditor(BaseRequestHandler):
     role_assignment.role = role
     role_assignment.content = self.request.get('content')
     role_assignment.put()
-    self.redirect('/_cms/roles/list')
+    self.redirect('/edit/roles/list')
 
   def show_delete_form(self):
     key = self.request.get('key')
@@ -172,7 +172,7 @@ class RoleAssignmentEditor(BaseRequestHandler):
     if not role_assignment:
       return self.not_found()
     role_assignment.delete()
-    self.redirect('/_cms/roles/list')
+    self.redirect('/edit/roles/list')
 
 class PageEditor(BaseRequestHandler):
   def get(self, action):
@@ -224,7 +224,7 @@ class PageEditor(BaseRequestHandler):
     # TODO: verify that url is unique & has only valid characters
     page = Page(url=url, title=title, content=content, author=user)
     key = page.put()
-    self.redirect('/_cms/pages/list')
+    self.redirect('/edit/pages/list')
 
   def show_modify_form(self):
     logging.error('OK')
@@ -250,7 +250,7 @@ class PageEditor(BaseRequestHandler):
     page.title = self.request.get('title')
     page.content = self.request.get('content')
     page.put()
-    self.redirect('/_cms/pages/list')
+    self.redirect('/edit/pages/list')
 
   def show_delete_form(self):
     key = self.request.get('key')
@@ -269,13 +269,13 @@ class PageEditor(BaseRequestHandler):
     if not page:
       return self.not_found()
     page.delete()
-    self.redirect('/_cms/pages/list')
+    self.redirect('/edit/pages/list')
 
 class EditorConsole(BaseRequestHandler):
   def get(self):
     if not self.require_login():
       return
-    self.respond('_cms.html', { })
+    self.respond('edit.html', { })
 
 class PageRenderer(BaseRequestHandler):
   def get(self, url):
@@ -285,9 +285,9 @@ class PageRenderer(BaseRequestHandler):
     self.respond('render.html', { 'page': page, })
 
 application = webapp.WSGIApplication([
-                ('/_cms/roles/(.*)', RoleAssignmentEditor),
-                ('/_cms/pages/(.*)', PageEditor),
-                ('/_cms/?', EditorConsole),
+                ('/edit/roles/(.*)', RoleAssignmentEditor),
+                ('/edit/pages/(.*)', PageEditor),
+                ('/edit/?', EditorConsole),
                 ('(/.*)', PageRenderer),
               ])
 def main():

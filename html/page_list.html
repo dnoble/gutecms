@@ -4,10 +4,10 @@
 
 {% block content %}
   <h2>Pages</h2>
-  <p>[ <a href="/_cms/pages/add">Add</a> ]</p>
+  <p>[ <a href="/edit/pages/add">Add</a> ]</p>
   {% for item in list %}
     <p>
-      <a href="/_cms/pages/modify?key={{ item.key }}">{{ item.title }}</a>
+      <a href="/edit/pages/modify?key={{ item.key }}">{{ item.title }}</a>
       <a href="{{ item.url }}">{{ item.url }}</a>
     </p>
   {% endfor %}

@@ -3,11 +3,11 @@
 {% block title %}Modify Page{% endblock %}
 
 {% block content %}
-  <form action="/_cms/pages/delete" method="post">
+  <form action="/edit/pages/delete" method="post">
     <input type="hidden" name="key" value="{{ page.key }}"/>
     <div><input type="submit" value="Delete"></div>
   </form>
-  <form action="/_cms/pages/modify" method="post">
+  <form action="/edit/pages/modify" method="post">
     <input type="hidden" name="key" value="{{ page.key }}"/>
     <input type="hidden" name="oldurl" value="{{ page.url }}"/>
     <div>Path<br/><input name="url" value="{{ page.url }}"/></div>

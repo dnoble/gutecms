@@ -1,4 +1,4 @@
-import logging
+import logging, traceback
 import os
 import re
 import cgi
@@ -32,6 +32,7 @@ class PageRenderer(webapp.RequestHandler):
         path = os.path.join(os.path.dirname(__file__), 'html', '404.html')
         self.response.out.write(template.render(path, { }))
     except:
+      logging.error(traceback.format_exc())
       self.error(500)
       path = os.path.join(os.path.dirname(__file__), 'html', '500.html')
       self.response.out.write(template.render(path, { }))
@@ -63,6 +64,12 @@ class EditRequestHandler(webapp.RequestHandler):
     path = os.path.join(os.path.dirname(__file__), 'html', 'edit', '404.html')
     self.response.out.write(template.render(path, { }))
 
+  def fail(self):
+    logging.error(traceback.format_exc())
+    self.error(500)
+    path = os.path.join(os.path.dirname(__file__), 'html', 'edit', '500.html')
+    self.response.out.write(template.render(path, { }))
+
   def require_login(self):
     user = users.get_current_user()
     if not user:
@@ -88,7 +95,7 @@ class EditRequestHandler(webapp.RequestHandler):
 
   def require_role(self, role):
     user = users.get_current_user()
-    if not self.has_role(user, 'Manager'):
+    if not self.has_role(user, role):
       self.respond('unauthorized.html', { })
       return False
     return True
@@ -112,9 +119,7 @@ class RoleAssignmentEditor(EditRequestHandler):
         logging.warn('Unrecognized request action: %s' % action)
         self.not_found()
     except:
-      self.error(500)
-      path = os.path.join(os.path.dirname(__file__), 'html', '500.html')
-      self.response.out.write(template.render(path, { }))
+      self.fail()
 
   def post(self, action):
     try:
@@ -130,9 +135,7 @@ class RoleAssignmentEditor(EditRequestHandler):
         logging.warn('Unrecognized request action: %s' % action)
         self.not_found()
     except:
-      self.error(500)
-      path = os.path.join(os.path.dirname(__file__), 'html', '500.html')
-      self.response.out.write(template.render(path, { }))
+      self.fail()
 
   def show_list(self):
     list = db.GqlQuery("SELECT * FROM RoleAssignment ORDER BY user ASC LIMIT 20")
@@ -220,9 +223,7 @@ class PageEditor(EditRequestHandler):
         logging.warn('Unrecognized request action: %s' % action)
         self.not_found()
     except:
-      self.error(500)
-      path = os.path.join(os.path.dirname(__file__), 'html', '500.html')
-      self.response.out.write(template.render(path, { }))
+      self.fail()
 
   def post(self, action):
     try:
@@ -238,9 +239,7 @@ class PageEditor(EditRequestHandler):
         logging.warn('Unrecognized request action: %s' % action)
         self.not_found()
     except:
-      self.error(500)
-      path = os.path.join(os.path.dirname(__file__), 'html', '500.html')
-      self.response.out.write(template.render(path, { }))
+      self.fail()
 
   def show_list(self):
     list = db.GqlQuery("SELECT * FROM Page ORDER BY url ASC LIMIT 20")
@@ -310,9 +309,20 @@ class PageEditor(EditRequestHandler):
 
 class EditorConsole(EditRequestHandler):
   def get(self):
-    if not self.require_login():
-      return
-    self.respond('edit.html', { })
+    try:
+      if not self.require_login():
+        return
+      user = users.get_current_user()
+      if self.has_role(user, 'Editor'):
+        self.redirect('/edit/roles/list')
+      elif self.has_role(user, 'Manager'):
+        self.redirect('/edit/roles/list')
+      elif self.has_role(user, 'Admin'):
+        self.redirect('/_ah/admin')
+      else:
+        self.respond('unauthorized.html', { })
+    except:
+      self.fail()
 
 application = webapp.WSGIApplication([
                 ('/edit/roles/(.*)', RoleAssignmentEditor),

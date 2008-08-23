@@ -8,9 +8,9 @@ body {
 body, p, ol, ul, th, td {
   font-family: verdana, arial, helvetica, sans-serif;
 }
-a { color: #666; text-decoration: none; font-weight: bold; }
-a:visited { color: #666; text-decoration: none; font-weight: bold; }
-a:hover { text-decoration: underline; }
+a { color: #669; text-decoration: underline; font-weight: bold; }
+a:visited { color: #669; text-decoration: underline; font-weight: bold; }
+a:hover { background: #eee; }
 
 div#page {
   background-color: #fff;
@@ -42,6 +42,9 @@ div#header ul li {
 span#title {
   font-size: 18pt;
 }
+span#title a { color: #666; text-decoration: none; font-weight: bold; }
+span#title a:visited { color: #666; text-decoration: none; font-weight: bold; }
+span#title a:hover { background: #fff; }
 div#content {
   text-align: left;
 }

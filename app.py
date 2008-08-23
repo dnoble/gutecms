@@ -22,13 +22,18 @@ class Page(db.Model):
 
 class PageRenderer(webapp.RequestHandler):
   def get(self, url):
-    page = Page.all().filter('url', url).get()
-    if page:
-      path = os.path.join(os.path.dirname(__file__), 'html', 'render.html')
-      self.response.out.write(template.render(path, { 'page': page, }))
-    else:
-      self.error(404)
-      path = os.path.join(os.path.dirname(__file__), 'html', '404.html')
+    try:
+      page = Page.all().filter('url', url).get()
+      if page:
+        path = os.path.join(os.path.dirname(__file__), 'html', 'render.html')
+        self.response.out.write(template.render(path, { 'page': page, }))
+      else:
+        self.error(404)
+        path = os.path.join(os.path.dirname(__file__), 'html', '404.html')
+        self.response.out.write(template.render(path, { }))
+    except:
+      self.error(500)
+      path = os.path.join(os.path.dirname(__file__), 'html', '500.html')
       self.response.out.write(template.render(path, { }))
 
 class EditRequestHandler(webapp.RequestHandler):
@@ -90,34 +95,44 @@ class EditRequestHandler(webapp.RequestHandler):
 
 class RoleAssignmentEditor(EditRequestHandler):
   def get(self, action):
-    if not self.require_login():
-      return
-    if not self.require_role('Manager'):
-      return
-    if action == 'list':
-      self.show_list()
-    elif action == 'add':
-      self.show_add_form()
-    elif action == 'modify':
-      self.show_modify_form()
-    elif action == 'delete':
-      self.show_delete_form()
-    else:
-      logging.warn('Unrecognized request action: %s' % action)
-      self.not_found()
+    try:
+      if not self.require_login():
+        return
+      if not self.require_role('Manager'):
+        return
+      if action == 'list':
+        self.show_list()
+      elif action == 'add':
+        self.show_add_form()
+      elif action == 'modify':
+        self.show_modify_form()
+      elif action == 'delete':
+        self.show_delete_form()
+      else:
+        logging.warn('Unrecognized request action: %s' % action)
+        self.not_found()
+    except:
+      self.error(500)
+      path = os.path.join(os.path.dirname(__file__), 'html', '500.html')
+      self.response.out.write(template.render(path, { }))
 
   def post(self, action):
-    if not self.require_login():
-      return
-    if action == 'add':
-      self.apply_add_form()
-    elif action == 'modify':
-      self.apply_modify_form()
-    elif action == 'delete':
-      self.apply_delete_form()
-    else:
-      logging.warn('Unrecognized request action: %s' % action)
-      self.not_found()
+    try:
+      if not self.require_login():
+        return
+      if action == 'add':
+        self.apply_add_form()
+      elif action == 'modify':
+        self.apply_modify_form()
+      elif action == 'delete':
+        self.apply_delete_form()
+      else:
+        logging.warn('Unrecognized request action: %s' % action)
+        self.not_found()
+    except:
+      self.error(500)
+      path = os.path.join(os.path.dirname(__file__), 'html', '500.html')
+      self.response.out.write(template.render(path, { }))
 
   def show_list(self):
     list = db.GqlQuery("SELECT * FROM RoleAssignment ORDER BY user ASC LIMIT 20")
@@ -188,34 +203,44 @@ class RoleAssignmentEditor(EditRequestHandler):
 
 class PageEditor(EditRequestHandler):
   def get(self, action):
-    if not self.require_login():
-      return
-    if not self.require_role('Editor'):
-      return
-    if action == 'list':
-      self.show_list()
-    elif action == 'add':
-      self.show_add_form()
-    elif action == 'modify':
-      self.show_modify_form()
-    elif action == 'delete':
-      self.show_delete_form()
-    else:
-      logging.warn('Unrecognized request action: %s' % action)
-      self.not_found()
+    try:
+      if not self.require_login():
+        return
+      if not self.require_role('Editor'):
+        return
+      if action == 'list':
+        self.show_list()
+      elif action == 'add':
+        self.show_add_form()
+      elif action == 'modify':
+        self.show_modify_form()
+      elif action == 'delete':
+        self.show_delete_form()
+      else:
+        logging.warn('Unrecognized request action: %s' % action)
+        self.not_found()
+    except:
+      self.error(500)
+      path = os.path.join(os.path.dirname(__file__), 'html', '500.html')
+      self.response.out.write(template.render(path, { }))
 
   def post(self, action):
-    if not self.require_login():
-      return
-    if action == 'add':
-      self.apply_add_form()
-    elif action == 'modify':
-      self.apply_modify_form()
-    elif action == 'delete':
-      self.apply_delete_form()
-    else:
-      logging.warn('Unrecognized request action: %s' % action)
-      self.not_found()
+    try:
+      if not self.require_login():
+        return
+      if action == 'add':
+        self.apply_add_form()
+      elif action == 'modify':
+        self.apply_modify_form()
+      elif action == 'delete':
+        self.apply_delete_form()
+      else:
+        logging.warn('Unrecognized request action: %s' % action)
+        self.not_found()
+    except:
+      self.error(500)
+      path = os.path.join(os.path.dirname(__file__), 'html', '500.html')
+      self.response.out.write(template.render(path, { }))
 
   def show_list(self):
     list = db.GqlQuery("SELECT * FROM Page ORDER BY url ASC LIMIT 20")

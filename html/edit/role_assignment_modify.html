@@ -3,6 +3,7 @@
 {% block title %}Modify Role Assignment{% endblock %}
 
 {% block content %}
+  <h1>Edit Role Assignment</h1>
   <form action="/edit/roles/delete" method="post">
     <input type="hidden" name="key" value="{{ role_assignment.key }}"/>
     <div><input type="submit" value="Delete"></div>

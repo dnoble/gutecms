@@ -5,10 +5,17 @@
 {% block content %}
   <h2>Role Assignments</h2>
   <p>[ <a href="/edit/roles/add">Add</a> ]</p>
+  <table class="roles" border="0" cellspacing="0" cellpadding="5">
+  <thead>
+    <tr><th>User</th><th>Role</th></tr>
+  </thead>
+  <tbody>
   {% for item in list %}
-    <p>
-      {{ item.user }} 
-      <a href="/edit/roles/modify?key={{ item.key }}">{{ item.role }}</a>
-    </p>
+    <tr>
+      <td>{{ item.user }}</td>
+      <td><a href="/edit/roles/modify?key={{ item.key }}">{{ item.role }}</a></td>
+    </tr>
   {% endfor %}
+  </tbody>
+  </table>
 {% endblock %}

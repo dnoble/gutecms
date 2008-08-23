@@ -5,10 +5,19 @@
 {% block content %}
   <h2>Pages</h2>
   <p>[ <a href="/edit/pages/add">Add</a> ]</p>
+  <table class="pages" border="0" cellspacing="0" cellpadding="2">
+  <thead>
+    <tr><th>View</th><th>Edit</th><th>Author</th><th>Date</th></tr>
+  </thead>
+  <tbody>
   {% for item in list %}
-    <p>
-      <a href="/edit/pages/modify?key={{ item.key }}">{{ item.title }}</a>
-      <a href="{{ item.url }}">{{ item.url }}</a>
-    </p>
+    <tr>
+      <td><a href="{{ item.url }}">{{ item.url }}</a></td>
+      <td><a href="/edit/pages/modify?key={{ item.key }}">{{ item.title }}</a></td>
+      <td>{{ item.author }}</td>
+      <td>{{ item.formatted_date }}</td>
+    </t>
   {% endfor %}
+  </tbody>
+  </table>
 {% endblock %}

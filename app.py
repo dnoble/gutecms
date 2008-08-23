@@ -19,6 +19,8 @@ class Page(db.Model):
   content = db.TextProperty()
   date = db.DateTimeProperty(auto_now_add=True)
   author = db.UserProperty()
+  def formatted_date(self):
+    return self.date.strftime('%d %b %Y %H:%M:%S')
 
 class PageRenderer(webapp.RequestHandler):
   def get(self, url):

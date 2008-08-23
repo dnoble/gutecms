@@ -67,3 +67,20 @@ div#footer {
 div.toggle-hidden {
   display: none;
 }
+
+table.pages {
+  padding: 5px;
+  width: 100%;
+  background: #eef;
+}
+table.pages thead tr th {
+  text-align: left
+}
+
+table.roles {
+  padding: 5px;
+  background: #eef;
+}
+table.roles thead tr th {
+  text-align: left
+}

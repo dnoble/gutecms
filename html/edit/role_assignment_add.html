@@ -3,6 +3,7 @@
 {% block title %}Add Role Assignment{% endblock %}
 
 {% block content %}
+  <h1>Add Role Assignment</h1>
   <form action="/edit/roles/add" method="post">
     <div>User<br/><input name="user"/></div>
     <div>Role<br/>
@@ -11,6 +12,8 @@
         <option value="Manager">Manager</option>
       </select>
     </div>
+    <p><i>Manager can create and edit role assignments</i></p>
+    <p><i>Editor can create and modify pages</i></p>
     <div><input type="submit" value="Save"></div>
   </form>
 {% endblock %}

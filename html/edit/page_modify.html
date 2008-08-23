@@ -3,6 +3,7 @@
 {% block title %}Modify Page{% endblock %}
 
 {% block content %}
+  <h1>Edit Page</h1>
   <form action="/edit/pages/delete" method="post">
     <input type="hidden" name="key" value="{{ page.key }}"/>
     <div><input type="submit" value="Delete"></div>

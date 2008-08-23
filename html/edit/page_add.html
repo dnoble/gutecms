@@ -3,8 +3,9 @@
 {% block title %}Add Page{% endblock %}
 
 {% block content %}
+  <h1>Add Page</h1>
   <form action="/edit/pages/add" method="post">
-    <div>Path<br/><input name="url"/></div>
+    <div>Path<br/><input name="url"/> <i>start with "/"</i></div>
     <div>Title<br/><input name="title"/></div>
     <div>Content<br/><textarea name="content" rows="20" cols="80"></textarea></div>
     <div><input type="submit" value="Save"></div>

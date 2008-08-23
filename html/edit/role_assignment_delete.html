@@ -1,0 +1,13 @@
+{% extends 'authenticated.html' %}
+
+{% block title %}Delete Role Assignment{% endblock %}
+
+{% block content %}
+  <form action="/edit/roles/delete" method="post">
+    <input type="hidden" name="key" value="{{ role_assignment.key }}"/>
+    <div><input type="submit" value="Delete"></div>
+  </form>
+    <div><b>User</b><br/>{{ role_assignment.user }}</div>
+    <div><b>Role</b><br/>{{ role_assignment.role }}</div>
+  </form>
+{% endblock %}

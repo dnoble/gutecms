@@ -1,0 +1,16 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+<title>{% block title %}{{ page.title }}{% endblock %}</title>
+<link rel="shortcut icon" href="/style/edit/favicon.ico" type="image/x-icon"/>
+<link href="/style/edit/main.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="page">
+{% block header %}{% endblock %}
+{% block content %}{% endblock %}
+</div>
+</body>
+</html>
+

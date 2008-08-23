@@ -1,9 +1,0 @@
-{% extends 'authenticated.html' %}
-
-{% block title %}GuteCMS Editor{% endblock %}
-
-{% block content %}
-  {% if role.none %}
-    <p>You have an account, but have not been assigned to any roles.</p>
-  {% endif %}
-{% endblock %}

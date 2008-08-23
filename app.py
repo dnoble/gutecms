@@ -20,7 +20,18 @@ class Page(db.Model):
   date = db.DateTimeProperty(auto_now_add=True)
   author = db.UserProperty()
 
-class BaseRequestHandler(webapp.RequestHandler):
+class PageRenderer(webapp.RequestHandler):
+  def get(self, url):
+    page = Page.all().filter('url', url).get()
+    if page:
+      path = os.path.join(os.path.dirname(__file__), 'html', 'render.html')
+      self.response.out.write(template.render(path, { 'page': page, }))
+    else:
+      self.error(404)
+      path = os.path.join(os.path.dirname(__file__), 'html', '404.html')
+      self.response.out.write(template.render(path, { }))
+
+class EditRequestHandler(webapp.RequestHandler):
   roles = None
 
   def respond(self, filename, payload):
@@ -38,12 +49,13 @@ class BaseRequestHandler(webapp.RequestHandler):
     payload['user'] = user
     payload['role'] = role
     payload['logout_url'] = users.create_logout_url(self.request.uri)
-    path = os.path.join(os.path.dirname(__file__), 'html', filename)
+    path = os.path.join(os.path.dirname(__file__), 'html', 'edit', filename)
+    logging.info(path)
     self.response.out.write(template.render(path, payload))
 
   def not_found(self):
     self.error(404)
-    path = os.path.join(os.path.dirname(__file__), 'html', '404.html')
+    path = os.path.join(os.path.dirname(__file__), 'html', 'edit', '404.html')
     self.response.out.write(template.render(path, { }))
 
   def require_login(self):
@@ -76,7 +88,7 @@ class BaseRequestHandler(webapp.RequestHandler):
       return False
     return True
 
-class RoleAssignmentEditor(BaseRequestHandler):
+class RoleAssignmentEditor(EditRequestHandler):
   def get(self, action):
     if not self.require_login():
       return
@@ -174,7 +186,7 @@ class RoleAssignmentEditor(BaseRequestHandler):
     role_assignment.delete()
     self.redirect('/edit/roles/list')
 
-class PageEditor(BaseRequestHandler):
+class PageEditor(EditRequestHandler):
   def get(self, action):
     if not self.require_login():
       return
@@ -271,18 +283,11 @@ class PageEditor(BaseRequestHandler):
     page.delete()
     self.redirect('/edit/pages/list')
 
-class EditorConsole(BaseRequestHandler):
+class EditorConsole(EditRequestHandler):
   def get(self):
     if not self.require_login():
       return
     self.respond('edit.html', { })
-
-class PageRenderer(BaseRequestHandler):
-  def get(self, url):
-    page = Page.all().filter('url', url).get()
-    if not page:
-      return self.not_found()
-    self.respond('render.html', { 'page': page, })
 
 application = webapp.WSGIApplication([
                 ('/edit/roles/(.*)', RoleAssignmentEditor),

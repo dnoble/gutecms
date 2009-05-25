@@ -332,7 +332,7 @@ class EditorConsole(EditRequestHandler):
         return
       user = users.get_current_user()
       if self.has_role(user, 'Editor'):
-        self.redirect('/edit/roles/list')
+        self.redirect('/edit/pages/list')
       elif self.has_role(user, 'Manager'):
         self.redirect('/edit/roles/list')
       elif self.has_role(user, 'Admin'):
